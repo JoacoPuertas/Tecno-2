@@ -10,9 +10,12 @@ class horizontal {
     }
   
     dibujar() {
-        this.altura =  int(map(mouseX,0, width,0 ,5)); 
-        this.opacidad = int(map(mouseX, 0, width, 3, 50))
-      image(this.manchas[this.altura],this.posX, this.posY,this.tam + 400,this.tam, this.opacidad )
+        if (mouseX > 0 && mouseX < width){
+            this.altura =  int(map(mouseX,0, width,0 ,5)); 
+            this.opacidad = int(map(mouseX, 0, width, 3, 50))
+        }
+
+         image(this.manchas[this.altura],this.posX, this.posY,this.tam + 400,this.tam, this.opacidad )
     }
   
     actualizar() {
