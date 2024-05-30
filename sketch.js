@@ -32,7 +32,9 @@ function draw() {
   
   c.actualizar();
   c.dibujar();
+
   m.dibujar();
+  m.actualizar();
   //estos textos sirven de ayuda para entender como funciona el prototipo
   text("mouseY en este cuadrante simula voz aguda", 10, (height/2)-50, 100);
   text("mouseY en este cuadrante simula voz grave", 10, (height/2)+10, 100);
@@ -44,6 +46,9 @@ function draw() {
   text("c.linea:" + int(c.linea), 50, 110);
   text("c.calida:" + int(c.calida), 50, 130);
   text("c.agudeza:" + int(c.agudeza), 50, 150);
+
+  //debug horizontales
+  text("m.altura:" + int(m.altura), width-100, 70);
 
 
 }
