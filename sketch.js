@@ -1,7 +1,8 @@
 let lineasVerticales = [];
 let cantidadVerticales = 9;
 let c;
-let cantidadHorizontales = 5;
+let cantidadHorizontales = 2;
+let cantidadSprites = 5;
 let lineasHorizontales = [];
 let m;
 // let posY = 0;
@@ -11,9 +12,13 @@ function preload() {
   for (let i = 0; i <= cantidadVerticales; i++) {
     lineasVerticales[i] = loadImage("data/vertical" + i + ".png");
   }
+
   for (let i = 0; i < cantidadHorizontales; i++) {
-    lineasHorizontales[i] = loadImage("data/mancha" + i + ".png")
+    lineasHorizontales[i] = [];
+    for (let z = 0; z < cantidadSprites; z++) {
+      lineasHorizontales[i][z] = loadImage("data/mancha" + i + z + ".png");
   }
+}
 
 }
 
@@ -23,7 +28,7 @@ function setup() {
   c = new vertical(lineasVerticales);
   m = new horizontal(lineasHorizontales);
   c.inicializar();
-  //frameRate(1);
+  //frameRate(10);
 
 }
 
@@ -33,8 +38,10 @@ function draw() {
   c.actualizar();
   c.dibujar();
 
-  m.dibujar();
+ m.dibujar();
   m.actualizar();
+
+  
   //estos textos sirven de ayuda para entender como funciona el prototipo
   text("mouseY en este cuadrante simula voz aguda", 10, (height/2)-50, 100);
   text("mouseY en este cuadrante simula voz grave", 10, (height/2)+10, 100);
@@ -49,6 +56,8 @@ function draw() {
 
   //debug horizontales
   text("m.altura:" + int(m.altura), width-100, 70);
-
+  text("m.sprites:" + int(m.sprite), width-100, 90);
+  text("m.posY:" + int(m.posY), width-100, 110);
+  text("m.posX:" + int(c.posX), width-100, 130);
 
 }
