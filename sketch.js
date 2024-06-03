@@ -1,10 +1,11 @@
 let lineasVerticales = [];
 let cantidadVerticales = 9;
 let c;
-let cantidadHorizontales = 2;
+let cantidadHorizontales = 5;
 let cantidadSprites = 5;
 let lineasHorizontales = [];
 let m;
+let bg;
 // let posY = 0;
 
 function preload() {
@@ -19,6 +20,7 @@ function preload() {
       lineasHorizontales[i][z] = loadImage("data/mancha" + i + z + ".png");
   }
 }
+bg = loadImage("data/bg.jpg");
 
 }
 
@@ -33,14 +35,24 @@ function setup() {
 }
 
 function draw() {
-  background(156, 203, 241);
+  //background(156, 203, 241);
+  push();
+  tint(156, 203, 241); //opacidad baja
+  image (bg, width/2, height/2, width, width)
+  pop();
   
   c.actualizar();
   c.dibujar();
 
  m.dibujar();
   m.actualizar();
+  
+//aguante el pincha papa
 
+  push();
+  tint(255, 30); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
+  image (bg, width/2, height/2, width, width)
+  pop();
   
   //estos textos sirven de ayuda para entender como funciona el prototipo
   text("mouseY en este cuadrante simula voz aguda", 10, (height/2)-50, 100);
