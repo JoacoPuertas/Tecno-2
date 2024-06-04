@@ -1,5 +1,5 @@
 let lineasVerticales = [];
-let cantidadVerticales = 9;
+let cantidadVerticales = 10;
 let c;
 let cantidadHorizontales = 5;
 let cantidadSprites = 5;
@@ -10,7 +10,7 @@ let bg;
 
 function preload() {
   // Cargar las imágenes
-  for (let i = 0; i <= cantidadVerticales; i++) {
+  for (let i = 0; i < cantidadVerticales; i++) {
     lineasVerticales[i] = loadImage("data/vertical" + i + ".png");
   }
 
