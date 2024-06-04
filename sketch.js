@@ -50,7 +50,7 @@ function draw() {
 //aguante el pincha papa
 
   push();
-  tint(255, 30); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
+  tint(0, 10); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
   image (bg, width/2, height/2, width, width)
   pop();
   
