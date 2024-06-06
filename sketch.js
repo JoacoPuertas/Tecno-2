@@ -39,22 +39,32 @@ function draw() {
   image(bg, width / 2, height / 2, width, width);
   pop();
 
-  c.actualizar();
+  
   c.dibujar();
-
   m.dibujar();
+if (mouseIsPressed){
+  c.actualizar();
   m.actualizar();
-
+}
   //aguante el pincha papaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
   push();
-  tint(0, 10); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
+  tint(156, 203, 241, 10); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
   image(bg, width / 2, height / 2, width, width);
   pop();
 
+
+  text("c.margenX:" + int(c.margenX), 50, 70);
+  text("c.frecuenciaActiva:" + int(c.frecuenciaActiva), 50, 85);
+  text("c.frecuencia:" + int(c.frecuencia), 50, 100);
+  
+
+
   //debug 
   if (!(keyIsPressed)) {
-    text ("mantener presionada cualquier tecla para debuggear", 20,20)
+    text ("mantener presionado el mouse para simular el inicio de la voz", 20,20)
+    text ("mantener presionada cualquier tecla para debuggear", 20,40)
+
   }
   if (keyIsPressed) {
     //estos textos sirven de ayuda para entender como funciona el prototipo

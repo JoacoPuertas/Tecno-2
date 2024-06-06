@@ -8,10 +8,21 @@ class vertical {
     this.posX = [];
     this.velX = []; // Esta variable determina la velocidad en que se mueven en X las lineas
     this.posXinicial = []; // Esta variable guarda el valor inicial en X de c/linea para determinar desp el margen en que se mueven en X
-    this.margenX = 100; //Esta variable determina el ancho maximo en q las lineas se mueven en X
+
+    //Esta variable determina el ancho maximo en q las lineas se mueven en X
+    //Hay un if para que el margen sea chico cuando son muchas lineas para que no se superpongan tanto
+    if (this.cantidadVerticales <= 5) {
+      this.margenX = 40;
+    } else if (this.cantidadVerticales >= 5) {
+      this.margenX = 20;
+    }
+
+    this.frecuencia = false;
+    this.frecuenciaActiva = 0;
+
     this.velocidad = []; // Esta variable determina la velocidad en Y de las lineas
     this.tam = 350; // Define el tamaño en el que se dibujan las líneas
-    this.limiteinferior = 400; // Define el limite superior del lienzo para determinar inicializacion en Y de las líneas
+    this.limiteinferior = 150; // Define el limite superior del lienzo para determinar inicializacion en Y de las líneas
     this.limitesuperior = -150; // Define el limite inferior
     this.agudeza; // Define la agudeza ( a nivel prorotipo, la determina la posicion del MouseY)
     this.calida = []; // Este booleano evalua si la linea es o no calida para determinar su direccion en Y
@@ -20,7 +31,9 @@ class vertical {
   inicializar() {
     // Este método asigna valores para todas las propiedades de las líneas
     for (let i = 0; i < this.cantidadVerticales; i++) {
-      this.posY.push(int(random(this.limitesuperior * 2, 0)));
+      this.posY.push(
+        int(random(this.limitesuperior * 2, this.limiteinferior * 2))
+      );
       this.posX.push(100 + i * 75);
       this.posXinicial[i] = this.posX[i];
       this.velX[i] = random(-(0.3, 0.5));
@@ -84,6 +97,27 @@ class vertical {
         this.posY[i] = this.limitesuperior;
       } else if (this.posY[i] < this.limitesuperior) {
         this.posY[i] = height + this.limiteinferior;
+      }
+    }
+
+    if (this.frecuenciaActiva >= 100 && this.margenX > 0) {
+      this.margenX -= 0.3;
+    } else if (this.frecuenciaActiva <= 100 && this.margenX < 40) {
+      this.margenX += 0.3;
+    }
+
+    //Mecanismo para achicar el margen cuando la frecuencia de la voz sea constante
+
+    if (this.frecuencia) {
+      this.frecuenciaActiva += 0.5;
+    } else if (!this.frecuencia) {
+      this.frecuenciaActiva = 0;
+    }
+    if (mouseIsPressed) {
+      if (mouseY < width / 2) {
+        this.frecuencia = true;
+      } else if (mouseY > width / 2){
+        this.frecuencia = false;
       }
     }
   }

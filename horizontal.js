@@ -11,11 +11,6 @@ class horizontal {
   }
 
   dibujar() {
-    if (mouseX > 0 && mouseX < width) {
-      this.altura = int(map(mouseX, 0, width, 0, 5));
-      this.opacidad = int(map(mouseX, 0, width, 3, 50));
-    }
-
     image(
       this.manchas[this.altura][this.sprite],
       this.posX,
@@ -23,17 +18,8 @@ class horizontal {
       this.tam +100,
       this.tam,
       this.opacidad
-    );
-
-   //para que los sprites no corran tan rapido
-    if (frameCount % 6 === 0) {
-      this.sprite++;
-    } else {
-    }
-    if (this.sprite == 5) {
-      this.sprite = 0;
-    }
-
+    )
+  
   }
 
   actualizar() {
@@ -49,5 +35,20 @@ class horizontal {
     } else if (this.posY > height - 100) {
       this.posY -= (-6, 4);
     }
+
+    if (mouseX > 0 && mouseX < width) {
+      this.altura = int(map(mouseX, 0, width, 0, 5));
+      this.opacidad = int(map(mouseX, 0, width, 3, 50));
+    }
+    
+     //para que los sprites no corran tan rapido
+     if (frameCount % 6 === 0) {
+      this.sprite++;
+    } else {
+    }
+    if (this.sprite == 5) {
+      this.sprite = 0;
+    }
+
   }
 }
