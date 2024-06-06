@@ -29,7 +29,7 @@ function setup() {
   c = new vertical(lineasVerticales);
   m = new horizontal(lineasHorizontales);
   c.inicializar();
-  //frameRate(10);
+  //frameRate(1);
 }
 
 function draw() {
@@ -45,15 +45,17 @@ function draw() {
   m.dibujar();
   m.actualizar();
 
-  //aguante el pincha papa
+  //aguante el pincha papaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
   push();
   tint(0, 10); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
   image(bg, width / 2, height / 2, width, width);
   pop();
 
-  //debug
-
+  //debug 
+  if (!(keyIsPressed)) {
+    text ("mantener presionada cualquier tecla para debuggear", 20,20)
+  }
   if (keyIsPressed) {
     //estos textos sirven de ayuda para entender como funciona el prototipo
     text(
@@ -76,6 +78,8 @@ function draw() {
     text("c.calida:" + int(c.calida), 50, 130);
     text("c.agudeza:" + int(c.agudeza), 50, 150);
     text("c.calida:" + int(c.calida), 50, 170);
+    text("c.posXinicial:" + int(c.posXinicial), 50, 190);
+
 
     //debug horizontales
     text("m.altura:" + int(m.altura), width - 100, 70);
@@ -84,3 +88,4 @@ function draw() {
     text("m.posX:" + int(c.posX), width - 100, 130);
   }
 }
+
