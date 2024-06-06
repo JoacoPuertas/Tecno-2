@@ -6,7 +6,7 @@ class vertical {
     this.linea = [];
     this.posY = [];
     this.posX = [];
-    this.velocidad = 5;
+    this.velocidad = [];
     this.tam = 350; // Define el tamaño en el que se dibujan las líneas
     this.limiteinferior = 400; // Define el limite superior del lienzo para determinar inicializacion en Y de las líneas
     this.limitesuperior = -150; // Define el limite inferior
@@ -19,8 +19,9 @@ class vertical {
     for (let i = 0; i < this.cantidadVerticales; i++) {
       this.posY.push(int(random(this.limitesuperior * 2, 0)));
       this.posX.push(100 + i * 75);
+      this.velocidad.push(int(random(5, 7)));
       this.linea.push(int(random(this.img.length))); // Selecciona la linea dentro del arreglo de imagenes
-      this.calida.push(this.linea[i] < 6 ? true : false); // Evalua si la línea es calida o no
+      this.calida.push(this.linea[i] < 7 ? true : false); // Evalua si la línea es calida o no
     }
   }
 
@@ -68,16 +69,16 @@ class vertical {
       if (this.agudeza > height / 2) { // Voz aguda = MouseY en mitad de lienzo hacia arriba
         // Si la voz es aguda suben los calidos y bajan los frios
         if (this.calida[i]) {
-          this.posY[i] += this.velocidad; // Suben lineas calidas 
+          this.posY[i] += this.velocidad[i]; // Suben lineas calidas 
         } else if (!this.calida[i]) {
-          this.posY[i] -= this.velocidad; // Bajan lineas frias
+          this.posY[i] -= this.velocidad[i]; // Bajan lineas frias
         }
       } else if (this.agudeza < height / 2) { // Voz grave = MouseY en mitad de lienzo hacia abajo
         // Si la voz es grave suben los frios y bajan los calidos
         if (this.calida[i]) {
-          this.posY[i] -= this.velocidad; // Suben lineas frias
+          this.posY[i] -= this.velocidad[i]; // Suben lineas frias
         } else if (!this.calida[i]) {
-          this.posY[i] += this.velocidad; //Bajan lineas calidas
+          this.posY[i] += this.velocidad[i]; //Bajan lineas calidas
         }
       } else {
       }
