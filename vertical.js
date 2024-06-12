@@ -55,24 +55,25 @@ class vertical {
     }
   }
 
-  actualizar() {
-    // Prototipo de altura de la voz con valor de Mouse Y:
+  actualizar(amp) {
+   
     // si está por encima de la mitad del lienzo,
     // sería voz alta; y si está por debajo, voz baja.
-    this.agudeza = mouseY;
+    this.amplitud = amp;
+    this.limite = 0.20;
 
     //  Este for determina la direccion Y de las lineas segun amplitud de voz
     for (let i = 0; i < this.posY.length; i++) {
-      if (this.agudeza > height / 2) {
-        // Voz alta = MouseY en mitad de lienzo hacia arriba
+      if (this.amplitud >= this.limite) {
+        // Voz alta
         // Si la voz es alta suben los calidos y bajan los frios
         if (this.calida[i]) {
           this.posY[i] += this.velocidad[i]; // Suben lineas calidas
         } else if (!this.calida[i]) {
           this.posY[i] -= this.velocidad[i]; // Bajan lineas frias
         }
-      } else if (this.agudeza < height / 2) {
-        // Voz baja = MouseY en mitad de lienzo hacia abajo
+      } else if (this.amplitud < this.limite) {
+        // Voz baja 
         // Si la voz es baja suben los frios y bajan los calidos
         if (this.calida[i]) {
           this.posY[i] -= this.velocidad[i]; // Suben lineas frias
@@ -100,25 +101,23 @@ class vertical {
       }
     }
 
-    if (this.frecuenciaActiva >= 100 && this.margenX > 0) {
+    if (this.frecuenciaActiva >= 50 && this.margenX > 0) {
       this.margenX -= 0.3;
     } else if (this.frecuenciaActiva <= 100 && this.margenX < 40) {
-      this.margenX += 0.3;
+      this.margenX += 5;
     }
 
-    //Mecanismo para achicar el margen cuando la frecuencia de la voz sea constante
+    //Mecanismo para achicar el margen cuando la amplitud de la voz sea constante
 
     if (this.frecuencia) {
       this.frecuenciaActiva += 0.5;
     } else if (!this.frecuencia) {
       this.frecuenciaActiva = 0;
     }
-    if (mouseIsPressed) {
-      if (mouseY < width / 2) {
+    if (amp > 0.02) {
         this.frecuencia = true;
-      } else if (mouseY > width / 2){
+      } else if (amp <= 0.02){
         this.frecuencia = false;
       }
     }
-  }
 }

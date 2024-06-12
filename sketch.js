@@ -6,7 +6,26 @@ let cantidadSprites = 5;
 let lineasHorizontales = [];
 let m;
 let bg;
-// let posY = 0;
+
+//---- CALIBRACION----
+let AMP_MIN = 0.01;
+let AMP_MAX = 0.25;
+
+let FREC_MIN = 20;
+let FREC_MAX = 1500;
+
+//audio
+let mic;
+let pitch;
+let amp;
+let frec = 0;
+
+let gestorAmp;
+let gestorFrec;
+
+let audioContext;
+const pitchModelURL =
+  "https://cdn.jsdelivr.net/gh/ml5js/ml5-data-and-models/models/pitch-detection/crepe/";
 
 function preload() {
   // Cargar las imágenes
@@ -26,48 +45,63 @@ function preload() {
 function setup() {
   imageMode(CENTER);
   createCanvas(500, 500);
+  
+  
+
+  //audio
+  audioContext = getAudioContext();
+  mic = new p5.AudioIn();
+  mic.start(startPitch);
+
+  userStartAudio(); // forzar el inicio del audio en el navegador
+
+  gestorAmp = new GestorSenial(AMP_MIN, AMP_MAX);
+  gestorFrec = new GestorSenial(FREC_MIN, FREC_MAX);
+
   c = new vertical(lineasVerticales);
   m = new horizontal(lineasHorizontales);
   c.inicializar();
-  //frameRate(1);
 }
 
 function draw() {
-  //background(156, 203, 241);
   push();
   tint(156, 203, 241); //opacidad baja
   image(bg, width / 2, height / 2, width, width);
   pop();
 
-  
+
+  //AUDIO
+  gestorAmp.actualizar(mic.getLevel()); // la señal directa (cruda) del mic la administra el gestor
+  amp = gestorAmp.filtrada;
+
   c.dibujar();
   m.dibujar();
-if (mouseIsPressed){
-  c.actualizar();
-  m.actualizar();
-}
-  //aguante el pincha papaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
 
+  if (amp > AMP_MIN) {
+    c.actualizar(amp);
+    m.actualizar(frec);
+  }
   push();
-  tint(156, 203, 241, 10); //opacidad baja, se repite despues de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
+  tint(156, 203, 241, 10); //opacidad baja, se repite después de dibujar las pinceladas para que la textura se genere tamb en las pinceladas
   image(bg, width / 2, height / 2, width, width);
   pop();
 
+  if (!keyIsPressed) {
+    text("m.altura:" + int(m.altura), width - 100, 70);
+    text("m.sprites:" + int(m.sprite), width - 100, 90);
+    text("m.frecuencia:" + m.frecuencia, width - 100, 110);
+    text (frec , width - 100, 130 )
 
-  text("c.margenX:" + int(c.margenX), 50, 70);
-  text("c.frecuenciaActiva:" + int(c.frecuenciaActiva), 50, 85);
-  text("c.frecuencia:" + int(c.frecuencia), 50, 100);
-  
+    // let texto = "frec: " + frec;
+    // text(texto, 20, 20);
 
+    // gestorFrec.dibujar(20, 50);
 
-  //debug 
-  if (!(keyIsPressed)) {
-    text ("mantener presionado el mouse para simular el inicio de la voz", 20,20)
-    text ("mantener presionada cualquier tecla para debuggear", 20,40)
-
+    // text("c.margenX:" + int(c.margenX), 50, 70);
+    // text("c.frecuenciaActiva:" + int(c.frecuenciaActiva), 50, 85);
+    // text("c.frecuencia:" + int(c.frecuencia), 50, 100);
   }
   if (keyIsPressed) {
-    //estos textos sirven de ayuda para entender como funciona el prototipo
     text(
       "mouseY en este cuadrante simula volumen de voz alto",
       10,
@@ -90,12 +124,35 @@ if (mouseIsPressed){
     text("c.calida:" + int(c.calida), 50, 170);
     text("c.posXinicial:" + int(c.posXinicial), 50, 190);
 
-
-    //debug horizontales
-    text("m.altura:" + int(m.altura), width - 100, 70);
-    text("m.sprites:" + int(m.sprite), width - 100, 90);
     text("m.posY:" + int(m.posY), width - 100, 110);
     text("m.posX:" + int(c.posX), width - 100, 130);
   }
 }
 
+function startPitch() {
+  pitch = ml5.pitchDetection(
+    pitchModelURL,
+    audioContext,
+    mic.stream,
+    modelLoaded
+  );
+}
+
+function modelLoaded() {
+  console.log("Model Loaded!");
+  getPitch();
+}
+
+function getPitch() {
+  if (pitch) {
+    pitch.getPitch(function (err, frequency) {
+      if (err) {
+        console.error(err);
+      } else if (frequency) {
+        gestorFrec.actualizar(frequency);
+        frec = gestorFrec.filtrada;
+      }
+      setTimeout(getPitch, 100);
+    });
+  }
+}
