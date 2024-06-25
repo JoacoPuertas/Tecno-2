@@ -7,7 +7,6 @@ let cantidadSprites = 5;
 let lineasHorizontales = [];
 let m;
 let bg;
-
 //---- CALIBRACION----
 let AMP_MIN = 0.01;
 let AMP_MAX = 0.25;
@@ -65,11 +64,11 @@ function setup() {
 }
 
 function draw() {
+  
   push();
   tint(156, 203, 241); //opacidad baja
   image(bg, width / 2, height / 2, width, width);
   pop();
-
   // Gestión de amplitud con el gestor
   gestorAmp.actualizar(mic.getLevel()); 
   amp = gestorAmp.filtrada;

@@ -22,10 +22,10 @@ class vertical {
 
     this.velocidad = []; // Esta variable determina la velocidad en Y de las lineas
     this.tam = 350; // Define el tamaño en el que se dibujan las líneas
-    this.limiteinferior = 150; // Define el limite superior del lienzo para determinar inicializacion en Y de las líneas
+    this.limiteinferior = height + 150; // Define el limite superior del lienzo para determinar inicializacion en Y de las líneas
     this.limitesuperior = -150; // Define el limite inferior
     this.agudeza; // Define la amplitud
-    this.calida = []; // Este booleano evalua si la linea es o no calida para determinar su direccion en Y
+    //this.calida = []; // Este booleano evalua si la linea es o no calida para determinar su direccion en Y
   }
 
   inicializar() {
@@ -39,7 +39,7 @@ class vertical {
       this.velX[i] = random(-(0.3, 0.5));
       this.velocidad.push(int(random(5, 7)));
       this.linea.push(int(random(this.img.length))); // Selecciona la linea dentro del arreglo de imagenes
-      this.calida.push(this.linea[i] < 7 ? true : false); // Evalua si la línea es calida o no
+      //this.calida.push(this.linea[i] < 7 ? true : false); // Evalua si la línea es calida o no
     }
   }
 
@@ -61,7 +61,7 @@ class vertical {
     this.frecuencia = frec;
 
     for (let i = 0; i < this.cantidadVerticales; i++) {
-        this.velocidad[i] = map(this.frecuencia, 0 , 1 , 2 ,50)
+        this.velocidad[i] = map(this.frecuencia, 0 , 1 , 2 , 30);
     }
 
     //Actualiza direccion Y de las lineas segun amplitud
@@ -69,36 +69,40 @@ class vertical {
     // Amplitud baja : cálidas hacia arriba, frías hacia abajo
     // Amplitud alta : cálidas hacia abajo, frías hacia arriba
     this.amplitud = amp;
-    this.limite = 0.2; // El límite define el valor en el que se considera amplitud alta o amplitud baja
+    this.limite = 0.10; // El límite define el valor en el que se considera amplitud alta o amplitud baja
 
     // Este for determina la direccion Y de las lineas segun amplitud de voz
     for (let i = 0; i < this.posY.length; i++) {
       if (this.amplitud >= this.limite) {
         // Voz alta
         // Si la voz es alta suben las calidas y bajan las frias
-        if (this.calida[i]) {
+        /*if (this.calida[i]) {
           this.posY[i] += this.velocidad[i]; // Suben lineas calidas
         } else if (!this.calida[i]) {
           this.posY[i] -= this.velocidad[i]; // Bajan lineas frias
-        }
+        }*/
+          this.posY[i] -= this.velocidad[i] + random(5,10);
+        
       } else if (this.amplitud < this.limite) {
         // Voz baja
         // Si la voz es baja suben las frias y bajan las calidas
-        if (this.calida[i]) {
-          this.posY[i] -= this.velocidad[i]; // Suben lineas frias
-        } else if (!this.calida[i]) {
-          this.posY[i] += this.velocidad[i]; //Bajan lineas calidas
-        }
-      } else {
-      }
+        // if (this.calida[i]) {
+        //   this.posY[i] -= this.velocidad[i]; // Suben lineas frias
+        // } else if (!this.calida[i]) {
+        //   this.posY[i] += this.velocidad[i]; //Bajan lineas calidas
+        // }
+        this.posY[i] += this.velocidad[i] + random(5,10);
+      } 
 
       // Este for determina el movimiento en X de las lineas
       for (let i = 0; i < this.posX.length; i++) {
         if (this.posX[i] <= this.posXinicial[i] - this.margenX) {
-          this.velX[i] = map(this.frecuencia, 0, 1, 0.2, 5);
+          // this.velX[i] = map(this.frecuencia, 0, 1, 0.2, 5);
           //this.velX[i] = random(0.2, 0.3);
+          this.velX[i] = random(0.2, 0.8);
         } else if (this.posX[i] >= this.posXinicial[i] + this.margenX) {
-          this.velX[i] = -(map(this.frecuencia, 0, 1, 0.2, 5));
+          // this.velX[i] = -(map(this.frecuencia, 0, 1, 0.2, 5));
+          this.velX[i] = -(random(0.2, 0.8));
           //this.velX[i] = random(-(0.2, 0.3));
         }
         this.posX[i] += this.velX[i];

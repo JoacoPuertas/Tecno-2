@@ -8,25 +8,27 @@ class horizontal {
     this.vel = random(5);
     this.opacidad = 50;
     this.sprite = 0; // El sprite cambia automaticamente para generar animación
-    this.frecuencia = 0; 
+    this.frecuencia = 0;
   }
 
   dibujar() {
+    push();
     image(
-      this.manchas[this.altura][this.sprite], 
+      this.manchas[this.altura][this.sprite],
       this.posX,
       this.posY,
       this.tam + 100,
       this.tam,
       this.opacidad
     );
+    pop();
   }
 
   actualizar(frec) {
     this.frecuencia = frec;
 
     // Movimiento automático que no depende de la voz, para generar animación de mancha
-    this.posX += this.vel; 
+    this.posX += this.vel;
     if (this.posX < width / 2 - 30) {
       this.vel = 2;
     } else if (this.posX > width / 2 + 30) {
