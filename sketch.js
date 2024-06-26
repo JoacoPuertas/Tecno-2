@@ -2,7 +2,7 @@
 let lineasVerticales = [];
 let cantidadVerticales = 10;
 let c;
-let cantidadHorizontales = 5;
+let cantidadHorizontales = 6;
 let cantidadSprites = 5;
 let lineasHorizontales = [];
 let m;

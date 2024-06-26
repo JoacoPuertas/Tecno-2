@@ -42,7 +42,7 @@ class horizontal {
     }
 
     // Define la mancha según la frecuencia de la voz
-    this.altura = int(map(this.frecuencia, 0, 1, 0, 5));
+    this.altura = int(map(this.frecuencia, 0, 1, 0, 6));
     this.opacidad = int(map(this.frecuencia, 0, 1, 3, 50));
 
     // Mecanismo para que la animación de los sprites no corra tan rapido
